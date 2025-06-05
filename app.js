@@ -25,8 +25,8 @@ function saveEvaluations() {
   localStorage.setItem(evaluationsKey, JSON.stringify(evaluations));
 }
 
-function renderPlayers() {
-  const list = document.getElementById('players-list');
+      <p class="pos">${p.pos1}${p.pos2 ? ' / ' + p.pos2 : ''}</p>
+      <p class="count">${evalCount} evaluaciones</p>
   list.innerHTML = '';
   players.forEach(player => {
     const li = document.createElement('li');
