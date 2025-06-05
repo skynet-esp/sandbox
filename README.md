@@ -6,3 +6,5 @@ Abre `index.html` en tu navegador para comenzar. Los datos se guardan en el `loc
 
 Selecciona un jugador para ver su historial de evaluaciones. Cada registro puede compararse con la media del equipo haciendo clic en **Comparar**.
 La sección de comparación muestra una tabla con los valores y una gráfica radar para visualizar las diferencias.
+
+La interfaz cuenta ahora con un menú inferior fijo con cuatro opciones: **Inicio**, **Jugadores**, **Evaluar** y **Datos**. En la pestaña *Jugadores* se muestran tarjetas estilo "fantasy" con la media de cada jugador y el número de evaluaciones registradas.

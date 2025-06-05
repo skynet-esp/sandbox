@@ -51,6 +51,48 @@
       margin-bottom: 5px;
     }
 
+    #players-cards {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .player-card {
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      padding: 10px;
+      width: 180px;
+    }
+
+    .player-card h3 {
+      margin-top: 0;
+      margin-bottom: 5px;
+    }
+
+    #bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: #0b5394;
+      display: flex;
+      justify-content: space-around;
+    }
+
+    #bottom-nav button {
+      flex: 1;
+      background: none;
+      color: #fff;
+      border: none;
+      padding: 10px 0;
+      cursor: pointer;
+    }
+
+    #bottom-nav button.active {
+      background: #073763;
+    }
+
     table {
       border-collapse: collapse;
       width: 100%;
@@ -105,6 +147,10 @@
     <ul id="players-list"></ul>
   </section>
 
+  <section id="players-cards" class="hidden">
+    <h2>Fichas de Jugadores</h2>
+  </section>
+
   <section id="evaluation-section" class="hidden">
     <h2>Evaluar Jugador</h2>
     <h3 id="evaluation-player-name"></h3>
@@ -139,6 +185,13 @@
     <label for="import-file" class="import-label">Importar Datos</label>
     <input type="file" id="import-file" accept="application/json" class="hidden">
   </section>
+
+  <nav id="bottom-nav">
+    <button data-target="players-list-section" class="active">🏠<br>Inicio</button>
+    <button data-target="players-cards">👥<br>Jugadores</button>
+    <button data-target="evaluation-section">📝<br>Evaluar</button>
+    <button data-target="data-section">💾<br>Datos</button>
+  </nav>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script type="module" src="app.js"></script>

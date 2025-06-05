@@ -37,6 +37,27 @@ function renderPlayers() {
   });
 }
 
+function renderPlayerCards() {
+  const container = document.getElementById('players-cards');
+  if (!container) return;
+  container.innerHTML = '';
+  players.forEach(p => {
+    const avg = playerAverage(p.id);
+    const evalCount = evaluations.filter(e => e.playerId === p.id).length;
+    const card = document.createElement('div');
+    card.className = 'player-card';
+    card.innerHTML = `
+      <h3>${p.name}</h3>
+      <p>${p.pos1}${p.pos2 ? ' / ' + p.pos2 : ''}</p>
+      <p>Evaluaciones: ${evalCount}</p>
+      <ul>
+        ${evalKeys.map(k => `<li>${k}: ${avg ? avg[k].toFixed(1) : '-'}</li>`).join('')}
+      </ul>
+    `;
+    container.appendChild(card);
+  });
+}
+
 function selectPlayer(id) {
   const player = players.find(p => p.id === id);
   if (!player) return;
@@ -45,9 +66,7 @@ function selectPlayer(id) {
   document.getElementById('player-name').value = player.name;
   document.getElementById('player-pos1').value = player.pos1;
   document.getElementById('player-pos2').value = player.pos2 || '';
-  document.getElementById('evaluation-section').classList.remove('hidden');
-  document.getElementById('compare-section').classList.remove('hidden');
-  document.getElementById('history-section').classList.remove('hidden');
+  activateSection('evaluation-section');
   renderHistory(id);
 }
 
@@ -200,6 +219,7 @@ function importData(file) {
         savePlayers();
         saveEvaluations();
         renderPlayers();
+        renderPlayerCards();
         const current = document.getElementById('player-id').value;
         if (current) {
           renderHistory(current);
@@ -234,6 +254,7 @@ document.getElementById('player-form').addEventListener('submit', e => {
   }
   savePlayers();
   renderPlayers();
+  renderPlayerCards();
   e.target.reset();
 });
 
@@ -256,6 +277,7 @@ document.getElementById('evaluation-form').addEventListener('submit', e => {
   saveEvaluations();
   renderHistory(playerId);
   renderComparison(entry);
+  renderPlayerCards();
   e.target.reset();
 });
 
@@ -266,5 +288,33 @@ document.getElementById('import-file').addEventListener('change', e => {
   e.target.value = '';
 });
 
+// navigation helpers
+function activateSection(sectionId) {
+  document.querySelectorAll('section').forEach(sec => {
+    if (sec.id === sectionId ||
+        (sectionId === 'evaluation-section' && ['evaluation-section','history-section','compare-section'].includes(sec.id))) {
+      sec.classList.remove('hidden');
+    } else {
+      sec.classList.add('hidden');
+    }
+  });
+  document.querySelectorAll('#bottom-nav button').forEach(btn => {
+    if (btn.dataset.target === sectionId) {
+      btn.classList.add('active');
+    } else {
+      btn.classList.remove('active');
+    }
+  });
+  if (sectionId === 'players-cards') renderPlayerCards();
+}
+
+document.querySelectorAll('#bottom-nav button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    activateSection(btn.dataset.target);
+  });
+});
+
 // initial render
 renderPlayers();
+renderPlayerCards();
+activateSection('players-list-section');
