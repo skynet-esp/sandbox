@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Control de Entreno - Ciutat de Palma</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      margin: 20px auto;
+      max-width: 800px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #0b5394;
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+
+    input, button {
+      padding: 5px;
+      margin-top: 5px;
+    }
+
+    button {
+      background: #0b5394;
+      color: #fff;
+      border: none;
+      padding: 8px 12px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #073763;
+    }
+
+    section {
+      margin-bottom: 30px;
+    }
+
+    ul#players-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    ul#players-list li {
+      margin-bottom: 5px;
+    }
+
+    #players-cards {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .player-card {
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      padding: 10px;
+      width: 180px;
+    }
+
+    .player-card h3 {
+      margin-top: 0;
+      margin-bottom: 5px;
+    }
+
+    #bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: #0b5394;
+      display: flex;
+      justify-content: space-around;
+    }
+
+    #bottom-nav button {
+      flex: 1;
+      background: none;
+      color: #fff;
+      border: none;
+      padding: 10px 0;
+      cursor: pointer;
+    }
+
+    #bottom-nav button.active {
+      background: #073763;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 5px;
+      text-align: center;
+    }
+
+    tr:nth-child(even) {
+      background: #eee;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .import-label {
+      border: 1px solid #0b5394;
+      padding: 6px 12px;
+      color: #0b5394;
+      cursor: pointer;
+    }
+
+    .import-label input {
+      display: none;
+    }
+
+    #export-btn {
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Evaluación de Jugadores - Prebenjamín 1º Año</h1>
+
+  <section id="player-form-section">
+    <h2>Registrar/Editar Jugador</h2>
+    <form id="player-form">
+      <input type="hidden" id="player-id">
+      <label>Nombre <input type="text" id="player-name" required></label>
+      <label>Posición Principal <input type="text" id="player-pos1" required></label>
+      <label>Posición Secundaria <input type="text" id="player-pos2"></label>
+      <button type="submit">Guardar Jugador</button>
+    </form>
+  </section>
+
+  <section id="players-list-section">
+    <h2>Jugadores</h2>
+    <ul id="players-list"></ul>
+  </section>
+
+  <section id="players-cards" class="hidden">
+    <h2>Fichas de Jugadores</h2>
+  </section>
+
+  <section id="evaluation-section" class="hidden">
+    <h2>Evaluar Jugador</h2>
+    <h3 id="evaluation-player-name"></h3>
+    <form id="evaluation-form">
+      <label>Fecha <input type="date" id="eval-date" required></label>
+      <label>Energía <input type="number" id="eval-energia" min="0" max="10" required></label>
+      <label>Concentración <input type="number" id="eval-concentracion" min="0" max="10" required></label>
+      <label>Control <input type="number" id="eval-control" min="0" max="10" required></label>
+      <label>Pase <input type="number" id="eval-pase" min="0" max="10" required></label>
+      <label>Regate <input type="number" id="eval-regate" min="0" max="10" required></label>
+      <label>Disparo <input type="number" id="eval-disparo" min="0" max="10" required></label>
+      <label>Visión <input type="number" id="eval-vision" min="0" max="10" required></label>
+      <label>Velocidad <input type="number" id="eval-velocidad" min="0" max="10" required></label>
+      <button type="submit">Guardar Evaluación</button>
+    </form>
+  </section>
+
+  <section id="history-section" class="hidden">
+    <h2>Historial de Evaluaciones</h2>
+    <div id="history-table"></div>
+  </section>
+
+  <section id="compare-section" class="hidden">
+    <h2>Comparar con Media del Equipo</h2>
+    <div id="compare-results"></div>
+    <canvas id="compare-chart" width="400" height="300"></canvas>
+  </section>
+
+  <section id="data-section">
+    <h2>Datos</h2>
+    <button id="export-btn">Exportar Datos</button>
+    <label for="import-file" class="import-label">Importar Datos</label>
+    <input type="file" id="import-file" accept="application/json" class="hidden">
+  </section>
+
+  <nav id="bottom-nav">
+    <button type="button" data-target="players-list-section" class="active">🏠<br>Inicio</button>
+    <button type="button" data-target="players-cards">👥<br>Jugadores</button>
+    <button type="button" data-target="evaluation-section">📝<br>Evaluar</button>
+    <button type="button" data-target="data-section">💾<br>Datos</button>
+  </nav>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
