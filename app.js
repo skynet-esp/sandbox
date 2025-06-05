@@ -1,5 +1,6 @@
 const playersKey = 'players';
 const evaluationsKey = 'evaluations';
+
 const evalKeys = [
   'energia',
   'concentracion',
@@ -99,7 +100,7 @@ function renderHistory(playerId) {
   }
   const table = document.createElement('table');
   const header = document.createElement('tr');
-  ['Fecha', ...evalKeys.map(k => k.charAt(0).toUpperCase()) , ''].forEach(t => {
+  ['Fecha', ...evalKeys.map(k => k.charAt(0).toUpperCase()), ''].forEach(t => {
     const th = document.createElement('th');
     th.textContent = t;
     header.appendChild(th);
@@ -194,9 +195,7 @@ function renderComparison(entry) {
 // export/import helpers
 function exportData() {
   const data = { players, evaluations };
-  const blob = new Blob([JSON.stringify(data, null, 2)], {
-    type: 'application/json'
-  });
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
@@ -235,7 +234,6 @@ function importData(file) {
 }
 
 // form handlers
-
 document.getElementById('player-form').addEventListener('submit', e => {
   e.preventDefault();
   const id = document.getElementById('player-id').value;
