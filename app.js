@@ -92,6 +92,43 @@ function renderComparison(playerId) {
   container.appendChild(table);
 }
 
+// export/import helpers
+function exportData() {
+  const data = { players, evaluations };
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'entreno.json';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function importData(file) {
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const data = JSON.parse(e.target.result);
+      if (Array.isArray(data.players) && Array.isArray(data.evaluations)) {
+        players = data.players;
+        evaluations = data.evaluations;
+        savePlayers();
+        saveEvaluations();
+        renderPlayers();
+        const current = document.getElementById('player-id').value;
+        if (current) {
+          renderComparison(current);
+        }
+      } else {
+        alert('Archivo no válido');
+      }
+    } catch (err) {
+      alert('Archivo no válido');
+    }
+  };
+  reader.readAsText(file);
+}
+
 // form handlers
 
 document.getElementById('player-form').addEventListener('submit', e => {
@@ -134,6 +171,13 @@ document.getElementById('evaluation-form').addEventListener('submit', e => {
   saveEvaluations();
   renderComparison(playerId);
   e.target.reset();
+});
+
+document.getElementById('export-btn').addEventListener('click', exportData);
+document.getElementById('import-file').addEventListener('change', e => {
+  const file = e.target.files[0];
+  if (file) importData(file);
+  e.target.value = '';
 });
 
 // initial render

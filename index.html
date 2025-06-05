@@ -4,12 +4,86 @@
   <meta charset="UTF-8">
   <title>Control de Entreno - Ciutat de Palma</title>
   <style>
-    body {font-family: Arial, sans-serif; margin: 20px;}
-    label {display: block; margin-top: 10px;}
-    section {margin-bottom: 30px;}
-    table {border-collapse: collapse; width: 100%;}
-    th, td {border: 1px solid #ccc; padding: 5px; text-align: center;}
-    .hidden {display: none;}
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      margin: 20px auto;
+      max-width: 800px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #0b5394;
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+
+    input, button {
+      padding: 5px;
+      margin-top: 5px;
+    }
+
+    button {
+      background: #0b5394;
+      color: #fff;
+      border: none;
+      padding: 8px 12px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #073763;
+    }
+
+    section {
+      margin-bottom: 30px;
+    }
+
+    ul#players-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    ul#players-list li {
+      margin-bottom: 5px;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 5px;
+      text-align: center;
+    }
+
+    tr:nth-child(even) {
+      background: #eee;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .import-label {
+      border: 1px solid #0b5394;
+      padding: 6px 12px;
+      color: #0b5394;
+      cursor: pointer;
+    }
+
+    .import-label input {
+      display: none;
+    }
+
+    #export-btn {
+      margin-right: 10px;
+    }
   </style>
 </head>
 <body>
@@ -51,6 +125,13 @@
   <section id="compare-section" class="hidden">
     <h2>Comparar con Media del Equipo</h2>
     <div id="compare-results"></div>
+  </section>
+
+  <section id="data-section">
+    <h2>Datos</h2>
+    <button id="export-btn">Exportar Datos</button>
+    <label for="import-file" class="import-label">Importar Datos</label>
+    <input type="file" id="import-file" accept="application/json" class="hidden">
   </section>
 
   <script type="module" src="app.js"></script>
