@@ -11,6 +11,8 @@ const evalKeys = [
   'velocidad'
 ];
 
+let compareChart = null;
+
 let players = JSON.parse(localStorage.getItem(playersKey) || '[]');
 let evaluations = JSON.parse(localStorage.getItem(evaluationsKey) || '[]');
 
@@ -136,6 +138,38 @@ function renderComparison(entry) {
     table.appendChild(tr);
   });
   container.appendChild(table);
+
+  // render chart
+  const ctx = document.getElementById('compare-chart').getContext('2d');
+  if (compareChart) compareChart.destroy();
+  compareChart = new Chart(ctx, {
+    type: 'radar',
+    data: {
+      labels: evalKeys,
+      datasets: [
+        {
+          label: 'Jugador',
+          data: evalKeys.map(k => Number(entry[k] || 0)),
+          backgroundColor: 'rgba(54, 162, 235, 0.2)',
+          borderColor: 'rgba(54, 162, 235, 1)'
+        },
+        {
+          label: 'Equipo',
+          data: evalKeys.map(k => teamAvg[k]),
+          backgroundColor: 'rgba(255, 99, 132, 0.2)',
+          borderColor: 'rgba(255, 99, 132, 1)'
+        }
+      ]
+    },
+    options: {
+      scales: {
+        r: {
+          beginAtZero: true,
+          max: 10
+        }
+      }
+    }
+  });
 }
 
 // export/import helpers
